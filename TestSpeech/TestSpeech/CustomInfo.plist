@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Describe why your app needs microphone access</string>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Describe why your app needs speech recognition access</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Anton-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

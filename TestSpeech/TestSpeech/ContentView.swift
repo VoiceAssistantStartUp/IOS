@@ -77,7 +77,7 @@ class SpeechRec: ObservableObject {
     }
     
     func start() {
-        self.speak(message: "Listening to you...")
+        self.speak(message: "Recording in progress.")
         self.recognitionState = "Listening..."
         
         //  в старт додав функцію, яка спочатку шукає перший доступний ID і записує туди
@@ -104,7 +104,7 @@ class SpeechRec: ObservableObject {
         audioFile = nil
         // btw, якийсь довгий текст при стопі, можливо придумай щось коротше трохи
         self.recognitionState = "Recognition Stopped"
-        self.speak(message: "Your recording has been successfully saved.")
+        self.speak(message: "Recording saved.")
     }
     
     func speak(message: String) {
@@ -172,6 +172,62 @@ class SpeechRec: ObservableObject {
         }
     }
 
+struct BackgroundColorStyle: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
+    func body(content: Content) -> some View {
+        let startColor: Color
+        let endColor: Color
+
+        if colorScheme == .light {
+            startColor = Color(#colorLiteral(red: 0.1647058824, green: 0.1764705882, blue: 0.1960784314, alpha: 1))
+            endColor = Color(#colorLiteral(red: 0.131372549, green: 0.07450980392, blue: 0.07450980392, alpha: 1))
+        } else {
+            startColor = Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.24))
+            endColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0))
+        }
+
+        return content.background(
+            LinearGradient(gradient: Gradient(colors: [startColor, endColor]), startPoint: .top, endPoint: .bottom)
+        )
+    }
+}
+
+struct CustomTextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color(red: 250/255, green: 250/255, blue: 250/255, opacity: 0.93))
+            .font(Font.custom("Anton", size: 40))
+            .fontWeight(.bold)
+            .lineSpacing(10)
+            .padding(.horizontal, 20)
+    }
+}
+
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding(10)
+            .foregroundColor(.white)
+            .background(
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(Color(#colorLiteral(red: 0.1254901961, green: 0.1294117647, blue: 0.1294117647, alpha: 1)))
+            )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+    }
+}
+
+struct CustomVStackStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(Color(#colorLiteral(red: 0.1254901961, green: 0.1294117647, blue: 0.1294117647, alpha: 1)))
+            )
+    }
+}
+
 struct ContentView: View {
     @ObservedObject var speechRec = SpeechRec()
     @State private var isListening = false
@@ -179,15 +235,63 @@ struct ContentView: View {
     @State private var showingDeleteAlert = false   // To show alert before deleting
 
     var body: some View {
-        NavigationView {
+        GeometryReader { metrics in
             VStack {
-                Text(speechRec.recognitionState)
-                    .padding()
-
-                Text("Last recording result: " + speechRec.recognizedText)
-                    .padding([.bottom, .top], 20)
-                    .padding([.leading, .trailing], 50)
-
+                Text("**MADOK VOICE RECORDER**")
+                    .modifier(CustomTextStyle())
+                    .padding(.vertical, 30)
+                Spacer()
+                VStack {
+                    if (!isListening) {
+                        HStack {
+                            Button(action: {
+                                self.showingDeleteAlert = true
+                            }, label: {
+                                Label("Delete all", systemImage: "xmark.circle")
+                                    .padding(5)
+                            })
+                            .foregroundColor(.white)
+                            .padding(.top, 10)
+                            .actionSheet(isPresented: $showingDeleteAlert) {
+                                ActionSheet(title: Text("Delete All Recordings"), message: Text("Are you sure you want to delete all recordings? This action cannot be undone."), buttons: [
+                                    .destructive(Text("Delete All")) {
+                                        self.speechRec.deleteAllRecordings()
+                                    },
+                                    .cancel()
+                                ])
+                            }
+                        }
+                        List(speechRec.allRecordings(), id: \.self) { url in
+                            HStack {
+                                Text(url.lastPathComponent)
+                                Spacer()
+                                Button(action: {
+                                    self.playRecording(from: url)
+                                }) {
+                                    Image(systemName: "play.fill")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                        }
+                        .scrollContentBackground(.hidden)
+                    } else {
+                        Text("Last recording result:")
+                        List {
+                            Text(speechRec.recognizedText)
+                                .padding(10)
+                                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity, alignment: .leading)
+                                .background(.clear)
+                        }
+                        .scrollContentBackground(.hidden)
+                        .listRowBackground(Color.clear)
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, maxHeight: .infinity, alignment: .leading)
+                    }
+                }
+                .modifier(CustomVStackStyle())
+                .frame(width: metrics.size.width * 0.90, height: metrics.size.height * 0.5)
+                
+                Spacer()
+                
                 Button(action: {
                     if isListening {
                         self.speechRec.stop()
@@ -197,54 +301,23 @@ struct ContentView: View {
                     isListening.toggle()
                 }) {
                     Text(isListening ? "Stop Listening" : "Start Listening")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                        .modifier(CustomTextStyle())
                 }
-
-                Button(action: {
-                    self.showingDeleteAlert = true
-                }) {
-                    Text("Delete All Recordings")
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.top, 10)
-                .actionSheet(isPresented: $showingDeleteAlert) {
-                    ActionSheet(title: Text("Delete All Recordings"), message: Text("Are you sure you want to delete all recordings? This action cannot be undone."), buttons: [
-                        .destructive(Text("Delete All")) {
-                            self.speechRec.deleteAllRecordings()
-                        },
-                        .cancel()
-                    ])
-                }
-
-                List(speechRec.allRecordings(), id: \.self) { url in
-                    HStack {
-                        Text(url.lastPathComponent)
-                        Spacer()
-                        Button(action: {
-                            self.playRecording(from: url)
-                        }) {
-                            Image(systemName: "play.fill")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                }
-            }
+                    .buttonStyle(CustomButtonStyle())
+           }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, 40)
+            .edgesIgnoringSafeArea(.all)
             .onReceive(NotificationCenter.default.publisher(for: .AVPlayerItemDidPlayToEndTime), perform: { _ in
                 self.selectedRecording = nil
             })
-            .navigationBarTitle("App Name", displayMode: .inline)
             .onAppear {
                 self.speechRec.objectWillChange.send()
             }
+            .modifier(BackgroundColorStyle())
         }
     }
-
+    
     func playRecording(from url: URL) {
         speechRec.playRecordedAudio(from: url)
     }

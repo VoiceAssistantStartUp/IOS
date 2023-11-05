@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 @main
 struct TestSpeechApp: App {
     var body: some Scene {

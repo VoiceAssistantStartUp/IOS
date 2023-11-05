@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F92B6A902AEF6C7C001BF444 /* CustomInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F92B6A8E2AEF6ADF001BF444 /* CustomInfo.plist */; };
+		847695222AF7495C001994CF /* Anton-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 847695212AF7495C001994CF /* Anton-Regular.ttf */; };
 		F9D379EB2ADC55340015A2FB /* TestSpeechApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D379EA2ADC55340015A2FB /* TestSpeechApp.swift */; };
 		F9D379ED2ADC55340015A2FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D379EC2ADC55340015A2FB /* ContentView.swift */; };
 		F9D379EF2ADC55360015A2FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9D379EE2ADC55360015A2FB /* Assets.xcassets */; };
@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		847695212AF7495C001994CF /* Anton-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Anton-Regular.ttf"; sourceTree = "<group>"; };
 		F92B6A8E2AEF6ADF001BF444 /* CustomInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CustomInfo.plist; sourceTree = "<group>"; };
 		F9D379E72ADC55340015A2FB /* TestSpeech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestSpeech.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9D379EA2ADC55340015A2FB /* TestSpeechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSpeechApp.swift; sourceTree = "<group>"; };
@@ -53,6 +54,7 @@
 		F9D379E92ADC55340015A2FB /* TestSpeech */ = {
 			isa = PBXGroup;
 			children = (
+				847695212AF7495C001994CF /* Anton-Regular.ttf */,
 				F92B6A8E2AEF6ADF001BF444 /* CustomInfo.plist */,
 				F9D379EA2ADC55340015A2FB /* TestSpeechApp.swift */,
 				F9D379EC2ADC55340015A2FB /* ContentView.swift */,
@@ -98,7 +100,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					F9D379E62ADC55340015A2FB = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -129,8 +131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9D379F22ADC55360015A2FB /* Preview Assets.xcassets in Resources */,
-				F92B6A902AEF6C7C001BF444 /* CustomInfo.plist in Resources */,
 				F9D379EF2ADC55360015A2FB /* Assets.xcassets in Resources */,
+				847695222AF7495C001994CF /* Anton-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +187,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -245,6 +248,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -272,12 +276,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestSpeech/Preview Content\"";
-				DEVELOPMENT_TEAM = 229V839258;
+				DEVELOPMENT_TEAM = 93HW68TJT6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestSpeech/CustomInfo.plist;
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We use the microphone to capture audio for speech recognition in the app.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We use speech recognition to convert spoken language into text for app functionality.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Describe why your app needs microphone access";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Describe why your app needs speech recognition access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -306,12 +310,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TestSpeech/Preview Content\"";
-				DEVELOPMENT_TEAM = 229V839258;
+				DEVELOPMENT_TEAM = 93HW68TJT6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestSpeech/CustomInfo.plist;
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We use the microphone to capture audio for speech recognition in the app.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "We use speech recognition to convert spoken language into text for app functionality.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Describe why your app needs microphone access";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Describe why your app needs speech recognition access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
